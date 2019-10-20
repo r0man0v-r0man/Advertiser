@@ -18,15 +18,5 @@ namespace Advertiser.Controllers
         {
             this.serviceManager = serviceManager;
         }
-        [HttpGet]
-        [Route("allFlats")]
-        public async IAsyncEnumerable<FlatModel> Get()
-        {
-            var flatsModels = serviceManager.Flats.GetAll();
-            await foreach (var flatModel in flatsModels)
-            {
-                yield return flatModel;
-            }
-        }
     }
 }
