@@ -11,6 +11,7 @@ import { registerLocaleData } from '@angular/common';
 import ru from '@angular/common/locales/ru';
 import { HomeComponent } from './components/home/home.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
 
 registerLocaleData(ru);
 
@@ -18,7 +19,8 @@ registerLocaleData(ru);
   declarations: [
     AppComponent,
     HomeComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,
