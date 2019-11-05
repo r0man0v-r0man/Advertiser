@@ -18,5 +18,12 @@ namespace Advertiser.Controllers
         {
             this.serviceManager = serviceManager;
         }
+        [HttpGet]
+        [Route("getAllFlats")]
+        public IActionResult GetFlats()
+        {
+            var flats = serviceManager.Flats.GetAll();
+            return Ok(flats);
+        }
     }
 }

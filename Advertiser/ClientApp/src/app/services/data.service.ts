@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import {catchError} from 'rxjs/operators'
-import { throwError } from 'rxjs';
+import { catchError, map } from 'rxjs/operators'
+import { throwError, Observable } from 'rxjs';
 import { AppError } from '../app-errors/app-error';
 import { NotFoundError } from '../app-errors/not-found-error';
 import { BadInput } from '../app-errors/bad-input';
@@ -9,11 +9,25 @@ import { BadInput } from '../app-errors/bad-input';
 @Injectable({
   providedIn: 'root'
 })
-export class DataServiceService {
-private url;
-  constructor(private httpsService: HttpClient) { }
+export class DataService {
+
+  constructor(
+    private url: string, 
+    private httpService: HttpClient) { }
   getAll(){
-    return this.httpsService.get(this.url)
+    return this.httpService.get<any[]>(this.url)
+      .pipe(
+        catchError(this.handleError)
+      )
+  }
+  create(resourse){
+    return this.httpService.post(this.url,JSON.stringify(resourse))
+      .pipe(
+        catchError(this.handleError)
+      )
+  }
+  delete(id){
+    return this.httpService.delete(this.url + '/' + id)
       .pipe(
         catchError(this.handleError)
       )
