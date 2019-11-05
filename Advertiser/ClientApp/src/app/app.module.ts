@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, ErrorHandler } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -12,6 +12,8 @@ import ru from '@angular/common/locales/ru';
 import { HomeComponent } from './components/home/home.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { FlatsComponent } from './components/flat/flats/flats.component';
+import { AppErrorHandler } from './app-errors/app-error-handler';
 
 registerLocaleData(ru);
 
@@ -20,7 +22,8 @@ registerLocaleData(ru);
     AppComponent,
     HomeComponent,
     NotFoundComponent,
-    NavbarComponent
+    NavbarComponent,
+    FlatsComponent
   ],
   imports: [
     BrowserModule,
@@ -30,7 +33,14 @@ registerLocaleData(ru);
     HttpClientModule,
     BrowserAnimationsModule
   ],
-  providers: [{ provide: NZ_I18N, useValue: ru_RU }],
+  providers: [
+    { 
+      provide: NZ_I18N, useValue: ru_RU 
+    },
+    {
+      provide: ErrorHandler, useClass: AppErrorHandler
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
