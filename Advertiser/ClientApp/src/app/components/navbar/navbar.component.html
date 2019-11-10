@@ -1,12 +1,14 @@
 <ul nz-menu nzMode="horizontal">
     <li nz-menu-item nzSelected>
-        <a [routerLink]="[ '/flats' ]" routerLinkActive="active">
+        <a [routerLink]="[ '/' ]" routerLinkActive="active">
             <i nz-icon nzType="user-add" nzTheme="outline"></i>
             Сдаю
         </a>
     </li>
     <li nz-menu-item >
-        <i nz-icon nzType="search" nzTheme="outline"></i>
-        Сниму
+        <a [routerLink]="[ '/flats' ]" routerLinkActive="active">
+            <i nz-icon nzType="search" nzTheme="outline"></i>
+            Сниму
+        </a>
     </li>
 </ul>

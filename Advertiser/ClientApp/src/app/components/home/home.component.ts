@@ -9,15 +9,20 @@ import { FlatModel } from 'src/app/models/flatModel';
 })
 export class HomeComponent implements OnInit {
   flats:FlatModel[];
+  loading = true;
   constructor(private flatService: FlatService) { }
 
   ngOnInit() {
     this.flatService.getAll()
       .subscribe(
-        response => {
-          this.flats = response as FlatModel[]
-          console.table(this.flats)
+        flats => {
+          this.flats = flats
+         },
+         ()=>{
 
+         },
+         ()=>{
+          this.loading = false       
          }
       )
   }
