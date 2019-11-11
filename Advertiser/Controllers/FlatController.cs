@@ -13,17 +13,20 @@ namespace Advertiser.Controllers
     [ApiController]
     public class FlatController : ControllerBase
     {
-        private readonly ServiceManager serviceManager;
+        private readonly ServiceManager _serviceManager;
         public FlatController( ServiceManager serviceManager)
         {
-            this.serviceManager = serviceManager;
+            this._serviceManager = serviceManager;
         }
         [HttpGet]
         [Route("getAllFlats")]
-        public IActionResult GetFlats()
+        public async IAsyncEnumerable<FlatModel> GetFlats()
         {
-            var flats = serviceManager.Flats.GetAll();
-            return Ok(flats);
+            var flats = _serviceManager.Flats.GetAll();
+            await foreach (var flat in flats)
+            {
+                yield return flat;
+            }
         }
     }
 }
