@@ -8,14 +8,14 @@ import { FlatModel } from 'src/app/models/flatModel';
   styleUrls: ['./home.component.less']
 })
 export class HomeComponent implements OnInit {
-  flats:FlatModel[];
+  flats:FlatModel[]
   loading = true;
   constructor(private flatService: FlatService) { }
 
   ngOnInit() {
     this.flatService.getAll()
       .subscribe(
-        flats => {
+          flats => {
           this.flats = flats
          },
          ()=>{
