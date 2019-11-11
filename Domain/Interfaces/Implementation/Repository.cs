@@ -1,8 +1,6 @@
 ﻿using DataAccess;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Domain.Interfaces.Implementation
@@ -26,7 +24,6 @@ namespace Domain.Interfaces.Implementation
         {
             await foreach (var T in dbSet.AsAsyncEnumerable().ConfigureAwait(false))
             {
-
                 yield return T;
             }
 
