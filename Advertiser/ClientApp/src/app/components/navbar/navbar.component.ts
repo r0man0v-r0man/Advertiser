@@ -13,7 +13,7 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit() {
   }
-  
+
   showAddAdvertModal(){
   const modal = this.modalService.create({
       nzTitle: 'Добавить объявление',

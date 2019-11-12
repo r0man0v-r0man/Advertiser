@@ -10,14 +10,14 @@ export class AddAdvertComponent implements OnInit {
   price = 200;
   formatterDollar = (value: number) => `$ ${value}`;
   parserDollar = (value: string) => value.replace('$ ', '');
-  addAdvertForm: FormGroup;
+  modal: FormGroup;
   constructor(private formBuilder: FormBuilder) { }
 
   ngOnInit() {
     this.initForm();
   }
   initForm(){
-    this.addAdvertForm = this.formBuilder.group({
+    this.modal = this.formBuilder.group({
       price: [null, [Validators.required]],
       description: [null, [Validators.required]]
     });
