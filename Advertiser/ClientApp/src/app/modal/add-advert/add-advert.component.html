@@ -1,6 +1,8 @@
 <form nz-form [formGroup]="modal" (ngSubmit)="_submitForm(event, modal.value)" [nzLayout]="horizontal">
     <nz-form-item >
-        <nz-form-control nzErrorTip="Укажите цену!">
+        <nz-form-control 
+        nzHasFeedback 
+        nzErrorTip="Укажите цену!">
             <nz-input-number
             [(ngModel)]="price"
             [nzSize]="'large'"
@@ -16,12 +18,22 @@
         </nz-form-control>
     </nz-form-item>
     <nz-form-item >
-        <nz-form-control nzErrorTip="Добавьте комментарий!">
+        <nz-form-control
+        nzHasFeedback 
+        [nzErrorTip]="descriptionErrorTpl">
                 <textarea 
                 formControlName="description"
                 placeholder="Ваш комментарий"
                 [nzAutosize]="{ minRows: 4, maxRows: 6 }" 
                 nz-input></textarea>
+            <ng-template #descriptionErrorTpl let-control>
+                <ng-container *ngIf="control.hasError('required')">
+                    Добавьте комментарий!
+                </ng-container>
+                <ng-container *ngIf="control.hasError('notOnlySpace')">
+                    Комментарий не должен быть пустым!
+                </ng-container>
+            </ng-template>
         </nz-form-control>        
     </nz-form-item>
 </form>

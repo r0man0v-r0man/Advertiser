@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
+import { DescriptionValidators } from 'src/app/validators/description.validators';
 
 @Component({
   selector: 'app-add-advert',
@@ -19,7 +20,8 @@ export class AddAdvertComponent implements OnInit {
   initForm(){
     this.modal = this.formBuilder.group({
       price: [null, [Validators.required]],
-      description: [null, [Validators.required]]
+      description: [null, [DescriptionValidators.notOnlySpace]]
     });
   }
+
 }
