@@ -1,1 +1,26 @@
-<p>add-advert works!</p>
+<form nz-form [formGroup]="addAdvertForm" (ngSubmit)="_submitForm(event, addAdvertForm.value)" [nzLayout]="horizontal">
+    <nz-form-item >
+        <nz-form-control nzErrorTip="Укажите цену!">
+            <nz-input-number
+            [(ngModel)]="price"
+            [nzSize]="'large'"
+            formControlName="price"
+            [nzPlaceHolder]="100"
+            [nzMin]="10"
+            [nzMax]="10000"
+            [nzStep]="10"
+            [nzFormatter]="formatterDollar"
+            [nzParser]="parserDollar"
+            [nzId]="price"
+            ></nz-input-number>
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item >
+        <nz-form-control nzErrorTip="Добавьте комментарий!">
+                <textarea 
+                formControlName="description"
+                [nzAutosize]="{ minRows: 4, maxRows: 6 }" 
+                nz-input></textarea>
+        </nz-form-control>        
+    </nz-form-item>
+</form>
