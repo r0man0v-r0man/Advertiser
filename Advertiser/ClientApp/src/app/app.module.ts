@@ -14,6 +14,7 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { FlatsComponent } from './components/flat/flats/flats.component';
 import { AppErrorHandler } from './app-errors/app-error-handler';
+import { AddAdvertComponent } from './modal/add-advert/add-advert.component';
 
 registerLocaleData(ru);
 
@@ -23,7 +24,8 @@ registerLocaleData(ru);
     HomeComponent,
     NotFoundComponent,
     NavbarComponent,
-    FlatsComponent
+    FlatsComponent,
+    AddAdvertComponent
   ],
   imports: [
     BrowserModule,
@@ -32,6 +34,9 @@ registerLocaleData(ru);
     FormsModule,
     HttpClientModule,
     BrowserAnimationsModule
+  ],
+  entryComponents: [
+    AddAdvertComponent
   ],
   providers: [
     { 

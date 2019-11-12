@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { NzModalService } from 'ng-zorro-antd';
+import { AddAdvertComponent } from 'src/app/modal/add-advert/add-advert.component';
 
 @Component({
   selector: 'app-navbar',
@@ -7,11 +9,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavbarComponent implements OnInit {
 
-  constructor() { }
+  constructor(private modalService: NzModalService) { }
 
   ngOnInit() {
   }
-  openAlert(){
-    console.log("asdfa");
+  
+  showAddAdvertModal(){
+  const modal = this.modalService.create({
+      nzTitle: 'Добавить объявление',
+      nzContent: AddAdvertComponent,
+      nzOnOk: ()=>{
+        modal.destroy();
+      }
+    });
   }
 }
