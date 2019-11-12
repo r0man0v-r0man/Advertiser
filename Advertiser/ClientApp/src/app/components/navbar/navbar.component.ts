@@ -17,11 +17,9 @@ export class NavbarComponent implements OnInit {
   const modal = this.modalService.create({
       nzTitle: 'Добавить объявление',
       nzContent: AddAdvertComponent,
-      nzOnOk: ()=>{
-          modal.destroy();
-      },
       nzFooter:[
         {
+          type: 'primary',
           label: 'Добавить',
           disabled: ()=> !modal.getContentComponent().modal.valid,
           onClick: ()=>{
