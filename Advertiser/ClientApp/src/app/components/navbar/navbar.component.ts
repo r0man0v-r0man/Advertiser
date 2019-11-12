@@ -8,7 +8,6 @@ import { AddAdvertComponent } from 'src/app/modal/add-advert/add-advert.componen
   styleUrls: ['./navbar.component.less']
 })
 export class NavbarComponent implements OnInit {
-
   constructor(private modalService: NzModalService) { }
 
   ngOnInit() {
@@ -19,8 +18,19 @@ export class NavbarComponent implements OnInit {
       nzTitle: 'Добавить объявление',
       nzContent: AddAdvertComponent,
       nzOnOk: ()=>{
-        modal.destroy();
-      }
+          modal.destroy();
+      },
+      nzFooter:[
+        {
+          label: 'Добавить',
+          disabled: ()=> !modal.getContentComponent().modal.valid,
+          onClick: ()=>{
+            if(modal.getContentComponent().modal.valid){
+              modal.destroy();
+            }
+          }
+        }
+      ]
     });
   }
 }

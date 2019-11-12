@@ -1,4 +1,4 @@
-<form nz-form [formGroup]="addAdvertForm" (ngSubmit)="_submitForm(event, addAdvertForm.value)" [nzLayout]="horizontal">
+<form nz-form [formGroup]="modal" (ngSubmit)="_submitForm(event, modal.value)" [nzLayout]="horizontal">
     <nz-form-item >
         <nz-form-control nzErrorTip="Укажите цену!">
             <nz-input-number
@@ -19,6 +19,7 @@
         <nz-form-control nzErrorTip="Добавьте комментарий!">
                 <textarea 
                 formControlName="description"
+                placeholder="Ваш комментарий"
                 [nzAutosize]="{ minRows: 4, maxRows: 6 }" 
                 nz-input></textarea>
         </nz-form-control>        
