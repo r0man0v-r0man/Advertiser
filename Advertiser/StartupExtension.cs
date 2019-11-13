@@ -41,6 +41,7 @@ namespace Advertiser
         public static void AddTransient(this IServiceCollection serviceCollection)
         {
             serviceCollection.AddTransient<IFlatService, FlatService>();
+            serviceCollection.AddTransient<IFileService, FileService>();
         }
         public static void AddAutoMapper(this IServiceCollection serviceCollection)
         {

@@ -8,6 +8,6 @@ import { HttpClient } from '@angular/common/http';
 export class FlatService extends DataService {
   
   constructor(httpService: HttpClient) {
-    super('https://localhost:44332/api/flat/getAllFlats', httpService)
+    super('https://localhost:44332/api/Flat/getAllFlats', httpService)
    }
 }

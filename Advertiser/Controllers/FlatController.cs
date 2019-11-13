@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Domain;
 using Domain.Models.FlatModels;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Advertiser.Controllers
@@ -16,7 +10,7 @@ namespace Advertiser.Controllers
     public class FlatController : ControllerBase
     {
         private readonly ServiceManager _serviceManager;
-        public FlatController( ServiceManager serviceManager)
+        public FlatController(ServiceManager serviceManager)
         {
             this._serviceManager = serviceManager;
         }
