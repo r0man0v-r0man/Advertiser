@@ -8,7 +8,7 @@ namespace Domain.Services
 {
     public class FileService : IFileService
     {
-        private readonly string _failedUpload = "Не получилось! А, давай еще раз";
+        const string failedUpload = "Не получилось! А, давай еще раз";
         public async Task<string> UploadFile(IFormFile uploadFile, string path)
         {
             try
@@ -25,7 +25,7 @@ namespace Domain.Services
 
                 }
 
-                return _failedUpload;
+                return failedUpload;
 
             }
             catch (Exception e)
