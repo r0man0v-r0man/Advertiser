@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
@@ -7,14 +8,32 @@ namespace Domain.Services
 {
     public class FileService : IFileService
     {
-        public async Task<bool> UploadFile(IFormFile uploadFile, string path)
+        private readonly string _failedUpload = "Не получилось! А, давай еще раз";
+        public async Task<string> UploadFile(IFormFile uploadFile, string path)
         {
-            if (!Directory.Exists(path))
+            try
             {
-                Directory.CreateDirectory(path);
+                if (uploadFile?.Length > 0)
+                {
+                    if (string.IsNullOrEmpty(path)) throw new NullReferenceException();
+                    if (!Directory.Exists(path)) Directory.CreateDirectory(path);
+
+                    await using FileStream fs = File.Create(path + uploadFile?.FileName);
+                    await uploadFile.CopyToAsync(fs).ConfigureAwait(false);
+
+                    return path + uploadFile.FileName;
+
+                }
+
+                return _failedUpload;
+
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);
+                throw;
             }
 
-            return true;
         }
     }
 }

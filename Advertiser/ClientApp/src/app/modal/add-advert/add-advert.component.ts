@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { DescriptionValidators } from 'src/app/validators/description.validators';
+import { Constants } from 'src/app/constants';
 
 @Component({
   selector: 'app-add-advert',
@@ -12,6 +13,8 @@ export class AddAdvertComponent implements OnInit {
   formatterDollar = (value: number) => `$ ${value}`;
   parserDollar = (value: string) => value.replace('$ ', '');
   modal: FormGroup;
+  uploadUrl = Constants.uploadFileUrl;
+
   constructor(private formBuilder: FormBuilder) { }
 
   ngOnInit() {

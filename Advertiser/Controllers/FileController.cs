@@ -29,13 +29,7 @@ namespace Advertiser.Controllers
 
             var result = await _serviceManager.Files.UploadFile(uploadFile, uploadPath).ConfigureAwait(false);
 
-            switch (result)
-            {
-                case true:
-                    return CreatedAtAction(nameof(UploadFile), result);
-                case false:
-                    return BadRequest(result);
-            }
+            return CreatedAtAction(nameof(UploadFile), result);
         }
     }
 }

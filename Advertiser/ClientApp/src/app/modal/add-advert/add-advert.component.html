@@ -1,3 +1,12 @@
+<nz-upload 
+    nzAction="{{uploadUrl}}" 
+    nzName="uploadFile"
+    >
+    <button nz-button>
+        <i nz-icon nzType="upload"></i>
+        <span>Click to Upload</span>
+    </button>
+</nz-upload>
 <form nz-form [formGroup]="modal" (ngSubmit)="_submitForm(event, modal.value)" [nzLayout]="horizontal">
     <nz-form-item >
         <nz-form-control 
@@ -37,6 +46,3 @@
         </nz-form-control>        
     </nz-form-item>
 </form>
-<nz-upload nzAction="https://localhost:44332/api/file/uploadFile" nzName="uploadFile">
-    <button nz-button><i nz-icon nzType="upload"></i><span>Click to Upload</span></button>
-  </nz-upload>
