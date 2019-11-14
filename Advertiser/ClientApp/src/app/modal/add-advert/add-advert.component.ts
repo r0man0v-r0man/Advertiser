@@ -30,7 +30,7 @@ export class AddAdvertComponent implements OnInit {
   }
   handleChange({ file, fileList }: UploadChangeParam): void {
     
-    console.log(file.status);
+    console.log(file);
 
   }
 }

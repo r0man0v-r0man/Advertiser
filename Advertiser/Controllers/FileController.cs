@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Net.Mime;
 using System.Threading.Tasks;
 using Domain;
+using Domain.Models.FileModels;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -27,14 +29,16 @@ namespace Advertiser.Controllers
             var uploadPath = _environment.WebRootPath + "\\Upload\\";
 
             var result = await _serviceManager.Files.UploadFile(file, uploadPath).ConfigureAwait(false);
-
-            return CreatedAtAction(nameof(UploadFile),
-                new
+            
+            return CreatedAtAction(nameof(UploadFile), 
+                new FileModel
                 {
-                    uid = "asdf", name = file.FileName, status = "done", response = new {status = "success"},
-                    linkPros = new {download = "image"}
-                });
+                    LinkProps = new FileModel.Links { Download = result },
+                    Name = file.FileName,
+                    Size = file.Length,
+                    Status = FileModel.Response.Success.ToString().ToLower(),
+                    Uid = Guid.NewGuid()
+                });        
         }
-        //todo create file(ng zorro) class
     }
 }
