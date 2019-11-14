@@ -23,7 +23,9 @@ export class NavbarComponent implements OnInit {
           label: 'Добавить',
           disabled: ()=> !modal.getContentComponent().modal.valid,
           onClick: ()=>{
+
             if(modal.getContentComponent().modal.valid){
+              console.table(modal.getContentComponent().modal.value);
               modal.destroy();
             }
           }

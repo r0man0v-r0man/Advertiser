@@ -1,13 +1,17 @@
 <nz-upload 
     nzAction="{{uploadUrl}}" 
-    nzName="uploadFile"
+    nzName="fileList"
+    nzListType="picture-card"
+    [nzFileList]="fileList"
+    [nzLimit]="1"
+    (nzChange)="handleChange($event)"
     >
-    <button nz-button>
-        <i nz-icon nzType="upload"></i>
-        <span>Click to Upload</span>
-    </button>
+    <p class="ant-upload-drag-icon">
+        <i nz-icon nzType="upload"></i>       
+    </p>
+    <p class="ant-upload-text">Нажмите для загрузки</p>
 </nz-upload>
-<form nz-form [formGroup]="modal" (ngSubmit)="_submitForm(event, modal.value)" [nzLayout]="horizontal">
+<form nz-form [formGroup]="modal" [nzLayout]="horizontal">
     <nz-form-item >
         <nz-form-control 
         nzHasFeedback 

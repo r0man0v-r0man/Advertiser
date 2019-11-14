@@ -1,6 +1,4 @@
-﻿using System;
-using System.Diagnostics;
-using System.IO;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Domain;
 using Microsoft.AspNetCore.Hosting;
@@ -23,11 +21,11 @@ namespace Advertiser.Controllers
         }
 
         [HttpPost("uploadFile")]
-        public async Task<IActionResult> UploadFile(IFormFile uploadFile)
+        public async Task<IActionResult> UploadFile(IFormFileCollection fileList)
         {
             var uploadPath = _environment.WebRootPath + "\\Upload\\";
 
-            var result = await _serviceManager.Files.UploadFile(uploadFile, uploadPath).ConfigureAwait(false);
+            var result = await _serviceManager.Files.UploadFile(fileList[0], uploadPath).ConfigureAwait(false);
 
             return CreatedAtAction(nameof(UploadFile), result);
         }
