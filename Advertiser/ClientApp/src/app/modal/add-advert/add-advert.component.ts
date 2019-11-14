@@ -15,7 +15,7 @@ export class AddAdvertComponent implements OnInit {
   parserDollar = (value: string) => value.replace('$ ', '');
   modal: FormGroup;
   uploadUrl = Constants.uploadFileUrl;
-  fileList = [];
+  fileList : UploadFile[]= [];
 
   constructor(private formBuilder: FormBuilder) { }
 
@@ -28,20 +28,9 @@ export class AddAdvertComponent implements OnInit {
       description: [null, [DescriptionValidators.notOnlySpace]]
     });
   }
-  handleChange(info: any): void {
-    console.log(info);
-    const fileList = info.fileList;
-    // 2. read from response and show file link
-    if (info.file.response) {
-      info.file.url = info.file.response.url;
-    }
-    // 3. filter successfully uploaded files according to response from server
-    // tslint:disable-next-line:no-any
-    this.fileList = fileList.filter((item: any) => {
-      if (item.response) {
-        return item.response.status === 'success';
-      }
-      return true;
-    });
+  handleChange({ file, fileList }: UploadChangeParam): void {
+    
+    console.log(file.status);
+
   }
 }

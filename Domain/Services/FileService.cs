@@ -20,8 +20,8 @@ namespace Domain.Services
 
                     await using FileStream fs = File.Create(path + uploadFile?.FileName);
                     await uploadFile.CopyToAsync(fs).ConfigureAwait(false);
-
-                    return path + uploadFile.FileName;
+                    var result = path + uploadFile.FileName;
+                    return result;
 
                 }
 

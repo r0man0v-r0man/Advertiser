@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Net.Mime;
 using System.Threading.Tasks;
 using Domain;
 using Microsoft.AspNetCore.Hosting;
@@ -21,13 +22,19 @@ namespace Advertiser.Controllers
         }
 
         [HttpPost("uploadFile")]
-        public async Task<IActionResult> UploadFile(IFormFileCollection fileList)
+        public async Task<ActionResult> UploadFile(IFormFile file)
         {
             var uploadPath = _environment.WebRootPath + "\\Upload\\";
 
-            var result = await _serviceManager.Files.UploadFile(fileList[0], uploadPath).ConfigureAwait(false);
+            var result = await _serviceManager.Files.UploadFile(file, uploadPath).ConfigureAwait(false);
 
-            return CreatedAtAction(nameof(UploadFile), result);
+            return CreatedAtAction(nameof(UploadFile),
+                new
+                {
+                    uid = "asdf", name = file.FileName, status = "done", response = new {status = "success"},
+                    linkPros = new {download = "image"}
+                });
         }
+        //todo create file(ng zorro) class
     }
 }
