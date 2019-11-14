@@ -16,7 +16,10 @@ export class AddAdvertComponent implements OnInit {
   modal: FormGroup;
   uploadUrl = Constants.uploadFileUrl;
   fileList : UploadFile[]= [];
-
+  showUploadList = {
+    showPreviewIcon: false,
+    showRemoveIcon: true
+  }
   constructor(private formBuilder: FormBuilder) { }
 
   ngOnInit() {
@@ -27,10 +30,5 @@ export class AddAdvertComponent implements OnInit {
       price: [null, [Validators.required]],
       description: [null, [DescriptionValidators.notOnlySpace]]
     });
-  }
-  handleChange({ file, fileList }: UploadChangeParam): void {
-    
-    console.log(file);
-
   }
 }

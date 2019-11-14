@@ -1,8 +1,9 @@
 <nz-upload 
-    nzAction="{{uploadUrl}}" 
+    nzAction="{{uploadUrl}}"
     nzListType="picture-card"
-    [nzData]="file"
-    (nzChange)="handleChange($event)"
+    [nzShowUploadList]="showUploadList"
+    [(nzFileList)]="fileList"
+    [nzShowButton]="fileList.length < 1"
     >
     <p class="ant-upload-drag-icon">
         <i nz-icon nzType="upload"></i>       
