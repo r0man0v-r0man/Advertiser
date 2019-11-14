@@ -24,7 +24,7 @@ namespace Advertiser.Controllers
         }
 
         [HttpPost("uploadFile")]
-        public async Task<ActionResult> UploadFile(IFormFile file)
+        public async Task<IActionResult> UploadFile(IFormFile file)
         {
             var uploadPath = _environment.WebRootPath + "\\Upload\\";
 
