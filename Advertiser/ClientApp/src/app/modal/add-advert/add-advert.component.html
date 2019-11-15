@@ -1,11 +1,16 @@
 <nz-upload 
     nzAction="{{uploadUrl}}"
     nzListType="picture-card"
+    [nzData]="onFile"
+    [nzSize]="3072"
     [nzShowUploadList]="showUploadList"
     [(nzFileList)]="fileList"
     [nzShowButton]="fileList.length < 1"
-    [nzAccept]="'image/*'"
-    >
+    [nzAccept]="'image/png,image/jpeg,image/gif,image/jpg'"
+    nzFileType="image/png,image/jpeg,image/gif,image/jpg"
+    [nzBeforeUpload]="beforeUpload"
+    (nzChange)="handleChange($event)"
+    ><!--nzSize 3mb-->
     <p class="ant-upload-drag-icon">
         <i nz-icon nzType="upload"></i>       
     </p>

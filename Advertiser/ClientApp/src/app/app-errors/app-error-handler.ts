@@ -1,8 +1,12 @@
-import { ErrorHandler } from '@angular/core';
+import { ErrorHandler, OnInit } from '@angular/core';
+import { NzMessageService } from 'ng-zorro-antd';
 
-export class AppErrorHandler implements ErrorHandler{
+export class AppErrorHandler implements ErrorHandler, OnInit{
+    constructor(private msg: NzMessageService){}
+    ngOnInit() {
+    }
     handleError(error) {
-        alert('An unxepected error occured.');
+        this.msg.error('Что-то пошло не так!');
         console.log(error);
     }
 
