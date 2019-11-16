@@ -32,17 +32,6 @@ export class AddAdvertComponent implements OnInit {
       description: [null, [DescriptionValidators.notOnlySpace]]
     });
   }
-  beforeUpload = (file: File )=> {
+  
 
-  }
-  handleChange(info: { file: UploadFile }): void {
-
-  }
-  onFile = (file: UploadFile) : UploadFile => {
-    this.file = file;
-    this.file.filename = "1111111";
-    this.file.name = "111111111.gif";
-    console.log(this.file);
-    return this.file;
-  }
 }

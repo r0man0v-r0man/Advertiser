@@ -1,6 +1,10 @@
-import { ErrorHandler, OnInit } from '@angular/core';
+import { ErrorHandler, OnInit, Injectable } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd';
 
+
+@Injectable({
+    providedIn: 'root'
+  })
 export class AppErrorHandler implements ErrorHandler, OnInit{
     constructor(private msg: NzMessageService){}
     ngOnInit() {

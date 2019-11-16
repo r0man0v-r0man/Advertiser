@@ -18,7 +18,7 @@ namespace Domain.Services
                     if (string.IsNullOrEmpty(path)) throw new NullReferenceException();
                     if (!Directory.Exists(path)) Directory.CreateDirectory(path);
 
-                    await using FileStream fs = File.Create(path + uploadFile?.FileName);
+                    await using FileStream fs = File.Create(path + uploadFile.FileName);
                     await uploadFile.CopyToAsync(fs).ConfigureAwait(false);
                     var result = path + uploadFile.FileName;
                     return result;
