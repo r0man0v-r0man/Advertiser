@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Net.Mime;
 using System.Threading.Tasks;
 using Domain;
@@ -29,15 +30,23 @@ namespace Advertiser.Controllers
             var uploadPath = _environment.WebRootPath + "\\Upload\\" + DateTime.Now.Year + "\\";
 
             var result = await _serviceManager.Files.UploadFile(file, uploadPath).ConfigureAwait(false);
-            
+            var resultFile = new FileModel
+            {
+                LinkProps = new FileModel.Links {Download = result.FileName},
+                Name = result.FileName,
+                Size = result.Length,
+                Status = FileModel.Response.Success.ToString().ToLower(),
+                Uid = Path.GetFileNameWithoutExtension(result.FileName)
+            };
+
             return CreatedAtAction(nameof(UploadFile), 
                 new FileModel
                 {
-                    LinkProps = new FileModel.Links { Download = result },
-                    Name = file.FileName,
-                    Size = file.Length,
+                    LinkProps = new FileModel.Links { Download = result.FileName },
+                    Name = result.FileName,
+                    Size = result.Length,
                     Status = FileModel.Response.Success.ToString().ToLower(),
-                    Uid = Guid.NewGuid()
+                    Uid = Path.GetFileNameWithoutExtension(result.FileName)
                 });        
         }
     }

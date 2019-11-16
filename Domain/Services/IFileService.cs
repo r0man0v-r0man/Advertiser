@@ -5,6 +5,6 @@ namespace Domain.Services
 {
     public interface IFileService
     {
-        Task<string> UploadFile(IFormFile uploadFile, string path);
+        Task<IFormFile> UploadFile(IFormFile uploadFile, string path);
     }
 }

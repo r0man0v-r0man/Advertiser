@@ -6,7 +6,7 @@ namespace Domain.Models.FileModels
 {
     public class FileModel
     {
-        public Guid Uid { get; set; }
+        public string Uid { get; set; }
         public long Size { get; set; }
         public string Name { get; set; }
         public string Status { get; set; }

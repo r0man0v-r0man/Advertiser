@@ -13,7 +13,7 @@ export class AddAdvertComponent implements OnInit {
   price = 200;
   formatterDollar = (value: number) => `$ ${value}`;
   parserDollar = (value: string) => value.replace('$ ', '');
-  modal: FormGroup;
+  form: FormGroup;
   uploadUrl = Constants.uploadFileUrl;
   fileList : UploadFile[]= [];
   file: UploadFile;
@@ -27,11 +27,16 @@ export class AddAdvertComponent implements OnInit {
     this.initForm();
   }
   initForm(){
-    this.modal = this.formBuilder.group({
+    this.form = this.formBuilder.group({
       price: [null, [Validators.required]],
-      description: [null, [DescriptionValidators.notOnlySpace]]
+      description: [null, [DescriptionValidators.notOnlySpace]],
+      file: [null, [Validators.required]]
     });
   }
-  
 
+  onChange(info: { file: UploadFile }){
+    console.log(info);
+
+    this.form.controls['file'].setValue('asdfasdfasdfasdf');
+  }
 }

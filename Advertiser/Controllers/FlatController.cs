@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Domain;
 using Domain.Models.FlatModels;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Advertiser.Controllers
@@ -23,6 +25,12 @@ namespace Advertiser.Controllers
             {
                 yield return flat;
             }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateAdvert(IFormFile file, string price, string description)
+        {
+            return Ok();
         }
     }
 }

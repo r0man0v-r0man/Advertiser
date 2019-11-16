@@ -1,4 +1,9 @@
-<nz-upload 
+<form 
+nz-form 
+[formGroup]="form" 
+[nzLayout]="horizontal"
+>
+<nz-upload
     nzAction="{{uploadUrl}}"
     nzListType="picture-card"
     [nzSize]="3072"
@@ -7,13 +12,14 @@
     [nzShowButton]="fileList.length < 1"
     [nzAccept]="'image/png,image/jpeg,image/gif,image/jpg'"
     nzFileType="image/png,image/jpeg,image/gif,image/jpg"
+    (nzChange)="onChange($event)"
     ><!--nzSize 3mb-->
     <p class="ant-upload-drag-icon">
         <i nz-icon nzType="upload"></i>       
     </p>
     <p class="ant-upload-text">Нажмите для загрузки</p>
+    <input type="hidden" formControlName="file">
 </nz-upload>
-<form nz-form [formGroup]="modal" [nzLayout]="horizontal">
     <nz-form-item >
         <nz-form-control 
         nzHasFeedback 
@@ -52,3 +58,6 @@
         </nz-form-control>        
     </nz-form-item>
 </form>
+<p>
+    {{modal.value | json}}
+</p>
