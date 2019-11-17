@@ -18,8 +18,8 @@ nz-form
         <i nz-icon nzType="upload"></i>       
     </p>
     <p class="ant-upload-text">Нажмите для загрузки</p>
-    <input type="hidden" formControlName="file">
 </nz-upload>
+<input nz-input type="hidden" formControlName="file">
     <nz-form-item >
         <nz-form-control 
         nzHasFeedback 
@@ -59,5 +59,5 @@ nz-form
     </nz-form-item>
 </form>
 <p>
-    {{modal.value | json}}
+    {{form.value | json}}
 </p>

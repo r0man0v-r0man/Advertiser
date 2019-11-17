@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms'
 import { DescriptionValidators } from 'src/app/validators/description.validators';
 import { Constants } from 'src/app/constants';
 import { UploadFile, UploadChangeParam } from 'ng-zorro-antd';
+import { throwError } from 'rxjs';
 
 @Component({
   selector: 'app-add-advert',
@@ -35,8 +36,7 @@ export class AddAdvertComponent implements OnInit {
   }
 
   onChange(info: { file: UploadFile }){
-    console.log(info);
-
-    this.form.controls['file'].setValue('asdfasdfasdfasdf');
+    if(info.file.status === 'done') this.form.controls['file'].setValue(info.file.name);
+    else throwError;
   }
 }

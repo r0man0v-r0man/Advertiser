@@ -21,11 +21,11 @@ export class NavbarComponent implements OnInit {
         {
           type: 'primary',
           label: 'Добавить',
-          disabled: ()=> !modal.getContentComponent().modal.valid,
+          disabled: ()=> !modal.getContentComponent().form.valid,
           onClick: ()=>{
 
-            if(modal.getContentComponent().modal.valid){
-              console.table(modal.getContentComponent().modal);
+            if(modal.getContentComponent().form.valid){
+              console.table(modal.getContentComponent().form);
               modal.destroy();
             }
           }
