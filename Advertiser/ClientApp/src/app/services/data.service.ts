@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators'
 import { throwError, Observable } from 'rxjs';
 import { AppError } from '../app-errors/app-error';
@@ -10,7 +10,7 @@ import { BadInput } from '../app-errors/bad-input';
   providedIn: 'root'
 })
 export class DataService {
-
+  headers = new HttpHeaders().set('content-type', 'application/json'); 
   constructor(
     private url: string, 
     private httpService: HttpClient) { }
@@ -20,8 +20,8 @@ export class DataService {
         catchError(this.handleError)
       )
   }
-  create(resourse){
-    return this.httpService.post(this.url,JSON.stringify(resourse))
+  create(url: string, resourse){
+    return this.httpService.post<any>(url, resourse, {headers: this.headers})
       .pipe(
         catchError(this.handleError)
       )

@@ -13,6 +13,9 @@ export class HomeComponent implements OnInit {
   constructor(private flatService: FlatService) { }
 
   ngOnInit() {
+    this.initHomePage();
+  }
+  initHomePage(){
     this.flatService.getAll()
       .subscribe(
           flats => {

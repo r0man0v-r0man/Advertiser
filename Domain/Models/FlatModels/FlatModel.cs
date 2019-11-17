@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Domain.Models.FileModels;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -22,5 +23,9 @@ namespace Domain.Models.FlatModels
         /// Описание квартиры
         /// </summary>
         public string Description { get; set; }
+        /// <summary>
+        /// Фотография объявления
+        /// </summary>
+        public FileModel File { get; set; }
     }
 }

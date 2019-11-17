@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { NzModalService } from 'ng-zorro-antd';
 import { AddAdvertComponent } from 'src/app/modal/add-advert/add-advert.component';
+import { FlatService } from 'src/app/services/flat.service';
+import { Constants } from 'src/app/constants';
+import { FlatModel } from 'src/app/models/flatModel';
 
 @Component({
   selector: 'app-navbar',
@@ -8,7 +11,7 @@ import { AddAdvertComponent } from 'src/app/modal/add-advert/add-advert.componen
   styleUrls: ['./navbar.component.less']
 })
 export class NavbarComponent implements OnInit {
-  constructor(private modalService: NzModalService) { }
+  constructor(private modalService: NzModalService, private flatService: FlatService) { }
 
   ngOnInit() {
   }
@@ -26,6 +29,13 @@ export class NavbarComponent implements OnInit {
 
             if(modal.getContentComponent().form.valid){
               console.info(modal.getContentComponent().form);
+              this.flatService
+                .create( 
+                  Constants.createFlatAdvertURL, 
+                  modal.getContentComponent().form.value as FlatModel)
+                .subscribe(response => {
+                  console.log(response);
+                })
               modal.destroy();
             }
           }

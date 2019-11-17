@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Domain;
+using Domain.Models.FileModels;
 using Domain.Models.FlatModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -16,8 +17,7 @@ namespace Advertiser.Controllers
         {
             this._serviceManager = serviceManager;
         }
-        [HttpGet]
-        [Route("getAllFlats")]
+        [HttpGet("getAllFlats")]
         public async IAsyncEnumerable<FlatModel> GetFlats()
         {
             var flats = _serviceManager.Flats.GetAll();
@@ -27,8 +27,8 @@ namespace Advertiser.Controllers
             }
         }
 
-        [HttpPost]
-        public async Task<IActionResult> CreateAdvert(IFormFile file, string price, string description)
+        [HttpPost("createFlatAdvert")]
+        public async Task<IActionResult> CreateAdvert(FlatModel flatModel)
         {
             return Ok();
         }
