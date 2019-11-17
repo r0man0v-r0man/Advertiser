@@ -8,8 +8,8 @@ namespace Domain.Services
 {
     public class FileService : IFileService
     {
-        const string failedUpload = "Не получилось! А, давай еще раз";
-        public async Task<IFormFile> UploadFile(IFormFile uploadFile, string path)
+        const string failedUpload = "Something wrong! Try again later";
+        public async Task<string> UploadFile(IFormFile uploadFile, string path)
         {
             try
             {
@@ -21,15 +21,16 @@ namespace Domain.Services
                     //new name for upload file
                     var extension = Path.GetExtension(uploadFile.FileName);
                     var newFileName = Guid.NewGuid();
-
-                    await using FileStream fs = File.Create(Path.Combine(path, string.Concat(newFileName, extension)));
-                    await uploadFile.CopyToAsync(fs).ConfigureAwait(false);
                     var file = Path.Combine(path, string.Concat(newFileName, extension));
-                    return uploadFile;
+                    //copy file to folder
+                    await using FileStream fs = File.Create(Path.Combine(path, file));
+                    await uploadFile.CopyToAsync(fs).ConfigureAwait(false);
+
+                    return file;
 
                 }
 
-                return uploadFile;
+                throw new Exception(failedUpload);
 
             }
             catch (Exception e)

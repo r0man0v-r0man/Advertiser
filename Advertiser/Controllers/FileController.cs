@@ -30,23 +30,15 @@ namespace Advertiser.Controllers
             var uploadPath = _environment.WebRootPath + "\\Upload\\" + DateTime.Now.Year + "\\";
 
             var result = await _serviceManager.Files.UploadFile(file, uploadPath).ConfigureAwait(false);
-            var resultFile = new FileModel
-            {
-                LinkProps = new FileModel.Links {Download = result.FileName},
-                Name = result.FileName,
-                Size = result.Length,
-                Status = FileModel.Response.Success.ToString().ToLower(),
-                Uid = Path.GetFileNameWithoutExtension(result.FileName)
-            };
 
             return CreatedAtAction(nameof(UploadFile), 
                 new FileModel
                 {
-                    LinkProps = new FileModel.Links { Download = result.FileName },
-                    Name = result.FileName,
-                    Size = result.Length,
+                    LinkProps = new FileModel.Links { Download = result },
+                    Name = Path.GetFileName(result),
+                    Size = file.Length,
                     Status = FileModel.Response.Success.ToString().ToLower(),
-                    Uid = Path.GetFileNameWithoutExtension(result.FileName)
+                    Uid = Path.GetFileNameWithoutExtension(result)
                 });        
         }
     }
