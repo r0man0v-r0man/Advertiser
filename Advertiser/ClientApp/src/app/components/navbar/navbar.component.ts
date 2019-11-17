@@ -25,7 +25,7 @@ export class NavbarComponent implements OnInit {
           onClick: ()=>{
 
             if(modal.getContentComponent().form.valid){
-              console.table(modal.getContentComponent().form);
+              console.info(modal.getContentComponent().form);
               modal.destroy();
             }
           }

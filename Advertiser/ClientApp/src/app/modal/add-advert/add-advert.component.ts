@@ -4,6 +4,8 @@ import { DescriptionValidators } from 'src/app/validators/description.validators
 import { Constants } from 'src/app/constants';
 import { UploadFile, UploadChangeParam } from 'ng-zorro-antd';
 import { throwError } from 'rxjs';
+import { AppError } from 'src/app/app-errors/app-error';
+import { NotFoundError } from 'src/app/app-errors/not-found-error';
 
 @Component({
   selector: 'app-add-advert',
@@ -31,12 +33,12 @@ export class AddAdvertComponent implements OnInit {
     this.form = this.formBuilder.group({
       price: [null, [Validators.required]],
       description: [null, [DescriptionValidators.notOnlySpace]],
-      file: [null, [Validators.required]]
+      file: [this.file, [Validators.required]]
     });
   }
 
   onChange(info: { file: UploadFile }){
-    if(info.file.status === 'done') this.form.controls['file'].setValue(info.file.name);
-    else throwError;
+    if(info.file.status === 'done' && info.file.response) 
+      this.form.controls['file'].setValue(info.file.response);
   }
 }
