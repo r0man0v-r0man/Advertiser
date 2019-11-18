@@ -34,7 +34,7 @@ namespace Domain.Services
                 return pathDb;
             }
             
-            return String.Empty;
+            return string.Empty;
         }
 
     }
