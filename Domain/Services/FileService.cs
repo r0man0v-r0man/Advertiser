@@ -8,37 +8,34 @@ namespace Domain.Services
 {
     public class FileService : IFileService
     {
-        const string failedUpload = "Something wrong! Try again later";
-        public async Task<string> UploadFile(IFormFile uploadFile, string path)
+        public async Task<string> UploadFile(IFormFile uploadFile, string webRootPath)
         {
-            try
+            if (uploadFile != null)
             {
-                if (uploadFile?.Length > 0)
-                {
-                    if (string.IsNullOrEmpty(path)) throw new NullReferenceException();
-                    if (!Directory.Exists(path)) Directory.CreateDirectory(path);
+                var folderPath = "Upload";
+                var subFolderYear = DateTime.Now.Year.ToString();
 
-                    //new name for upload file
-                    var extension = Path.GetExtension(uploadFile.FileName);
-                    var newFileName = Guid.NewGuid();
-                    var file = Path.Combine(path, string.Concat(newFileName, extension));
-                    //copy file to folder
-                    await using FileStream fs = File.Create(Path.Combine(path, file));
-                    await uploadFile.CopyToAsync(fs).ConfigureAwait(false);
+                var realPath = webRootPath + "\\" + folderPath + "\\" + subFolderYear + "\\";
 
-                    return file;
+                if (!Directory.Exists(realPath))
+                    Directory.CreateDirectory(realPath);
 
-                }
+                var uniqueName = Guid.NewGuid().ToString();
+                var fileExtension = Path.GetExtension(uploadFile.FileName);
+                var newFileName = uniqueName + fileExtension;
 
-                throw new Exception(failedUpload);
+                var fileName = Path.Combine(webRootPath, folderPath, subFolderYear) + $@"\{newFileName}";
 
+                var pathDb = folderPath + "/" + subFolderYear + "/" + newFileName;
+
+                await using FileStream fs = File.Create(fileName);
+                await uploadFile.CopyToAsync(fs).ConfigureAwait(false);
+
+                return pathDb;
             }
-            catch (Exception e)
-            {
-                Debug.WriteLine(e);
-                throw;
-            }
-
+            
+            return String.Empty;
         }
+
     }
 }

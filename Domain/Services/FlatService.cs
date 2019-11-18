@@ -16,9 +16,12 @@ namespace Domain.Services
             this.mapper = mapper;
         }
 
-        public async Task AddAsync(FlatModel flat) => await dataManager.Flats
-            .CreateAsync(mapper.Map<DataAccess.Entities.Flat>(flat))
-            .ConfigureAwait(false);
+        public async Task AddAsync(FlatModel flat)
+        {
+            await dataManager.Flats
+                .CreateAsync(mapper.Map<DataAccess.Entities.Flat>(flat))
+                .ConfigureAwait(false);
+        }
 
         public async IAsyncEnumerable<FlatModel> GetAll()
         {

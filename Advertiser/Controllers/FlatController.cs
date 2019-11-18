@@ -30,6 +30,7 @@ namespace Advertiser.Controllers
         [HttpPost("createFlatAdvert")]
         public async Task<IActionResult> CreateAdvert(FlatModel flatModel)
         {
+            await _serviceManager.Flats.AddAsync(flatModel).ConfigureAwait(false);
             return Ok();
         }
     }
