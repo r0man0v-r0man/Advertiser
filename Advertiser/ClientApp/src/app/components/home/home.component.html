@@ -1,0 +1,13 @@
+<div class="flat-cards" nz-row [nzGutter]="8" style="background: #ECECEC;padding:30px;">
+    <div *ngFor="let flat of flats" nz-col [nzSpan]="8">
+      <nz-card  
+        [nzCover]="flatCoverTpl"
+        [nzLoading]="loading"
+        nzTitle="{{flat.price}}$">
+        <p>{{flat.description}}</p>
+      </nz-card>
+      <ng-template #flatCoverTpl>
+        <img src="{{ flat.file.linkProps.download }}">
+      </ng-template>
+    </div>
+</div>

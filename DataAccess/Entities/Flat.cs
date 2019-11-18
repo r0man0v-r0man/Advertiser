@@ -23,5 +23,9 @@ namespace DataAccess.Entities
         /// Описание квартиры
         /// </summary>
         public string Description { get; set; }
+        /// <summary>
+        /// Фотография объявления
+        /// </summary>
+        public string Image { get; set; }
     }
 }

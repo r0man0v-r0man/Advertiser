@@ -1,0 +1,63 @@
+<form 
+nz-form 
+[formGroup]="form" 
+[nzLayout]="horizontal"
+>
+<nz-upload
+    nzAction="{{uploadUrl}}"
+    nzListType="picture-card"
+    [nzSize]="3072"
+    [nzShowUploadList]="showUploadList"
+    [(nzFileList)]="fileList"
+    [nzShowButton]="fileList.length < 1"
+    [nzAccept]="'image/png,image/jpeg,image/gif,image/jpg'"
+    nzFileType="image/png,image/jpeg,image/gif,image/jpg"
+    (nzChange)="onChange($event)"
+    ><!--nzSize 3mb-->
+    <p class="ant-upload-drag-icon">
+        <i nz-icon nzType="upload"></i>       
+    </p>
+    <p class="ant-upload-text">Нажмите для загрузки</p>
+</nz-upload>
+<input nz-input type="hidden" formControlName="file">
+    <nz-form-item >
+        <nz-form-control 
+        nzHasFeedback 
+        nzErrorTip="Укажите цену!">
+            <nz-input-number
+            [(ngModel)]="price"
+            [nzSize]="'large'"
+            formControlName="price"
+            [nzPlaceHolder]="100"
+            [nzMin]="10"
+            [nzMax]="10000"
+            [nzStep]="10"
+            [nzFormatter]="formatterDollar"
+            [nzParser]="parserDollar"
+            [nzId]="price"
+            ></nz-input-number>
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item >
+        <nz-form-control
+        nzHasFeedback 
+        [nzErrorTip]="descriptionErrorTpl">
+                <textarea 
+                formControlName="description"
+                placeholder="Ваш комментарий"
+                [nzAutosize]="{ minRows: 4, maxRows: 6 }" 
+                nz-input></textarea>
+            <ng-template #descriptionErrorTpl let-control>
+                <ng-container *ngIf="control.hasError('required')">
+                    Добавьте комментарий!
+                </ng-container>
+                <ng-container *ngIf="control.hasError('notOnlySpace')">
+                    Комментарий не должен быть пустым!
+                </ng-container>
+            </ng-template>
+        </nz-form-control>        
+    </nz-form-item>
+</form>
+<p>
+    {{form.value | json}}
+</p>

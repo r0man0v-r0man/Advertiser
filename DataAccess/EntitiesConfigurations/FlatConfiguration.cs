@@ -27,7 +27,8 @@ namespace DataAccess.EntitiesConfigurations
                 .Property(flat => flat.Description)
                 .IsRequired()
                 .HasMaxLength(255);
-
+            builder
+                .Property(flat => flat.Image);
         }
     }
 }

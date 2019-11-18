@@ -7,12 +7,14 @@ namespace Domain
 {
     public class ServiceManager
     {
-        private readonly IFlatService flatService;
-        public ServiceManager(IFlatService flatService)
+        private readonly IFlatService _flatService;
+        private readonly IFileService _fileService;
+        public ServiceManager(IFlatService flatService, IFileService fileService)
         {
-            this.flatService = flatService;
+            _flatService = flatService;
+            _fileService = fileService;
         }
-        public IFlatService Flats { get => flatService; }
-
+        public IFlatService Flats { get => _flatService; }
+        public IFileService Files { get => _fileService; }
     }
 }

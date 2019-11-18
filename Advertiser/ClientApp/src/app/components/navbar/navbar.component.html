@@ -1,0 +1,14 @@
+<ul nz-menu nzMode="horizontal">
+    <li nz-menu-item nzSelected>
+        <a [routerLink]="[ '/' ]" routerLinkActive="active">
+            <i nz-icon nzType="user-add" nzTheme="outline"></i>
+            Все квартиры
+        </a>
+    </li>
+    <div class="add-advert">
+        <button nz-button nzType="dashed" nzSize="large" nzShape="round" (click)="showAddAdvertModal()">
+            <i nz-icon nzType="plus-circle"></i>
+            Добавить объявление
+        </button>
+    </div>
+</ul>

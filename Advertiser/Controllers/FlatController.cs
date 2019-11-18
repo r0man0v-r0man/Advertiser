@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Domain;
+using Domain.Models.FileModels;
 using Domain.Models.FlatModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -13,10 +12,26 @@ namespace Advertiser.Controllers
     [ApiController]
     public class FlatController : ControllerBase
     {
-        private readonly ServiceManager serviceManager;
-        public FlatController( ServiceManager serviceManager)
+        private readonly ServiceManager _serviceManager;
+        public FlatController(ServiceManager serviceManager)
         {
-            this.serviceManager = serviceManager;
+            this._serviceManager = serviceManager;
+        }
+        [HttpGet("getAllFlats")]
+        public async IAsyncEnumerable<FlatModel> GetFlats()
+        {
+            var flats = _serviceManager.Flats.GetAll();
+            await foreach (var flat in flats)
+            {
+                yield return flat;
+            }
+        }
+
+        [HttpPost("createFlatAdvert")]
+        public async Task<IActionResult> CreateAdvert(FlatModel flatModel)
+        {
+            await _serviceManager.Flats.AddAsync(flatModel).ConfigureAwait(false);
+            return Ok();
         }
     }
 }
