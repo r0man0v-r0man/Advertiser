@@ -26,13 +26,13 @@ export class NavbarComponent implements OnInit {
           label: 'Добавить',
           disabled: ()=> !modal.getContentComponent().form.valid,
           onClick: ()=>{
-
-            if(modal.getContentComponent().form.valid){
-              console.info(modal.getContentComponent().form);
+            const modalForm = modal.getContentComponent().form;
+            if(modalForm.valid){
+              let newFlatAdvert = new FlatModel(modalForm.value)
               this.flatService
                 .create( 
                   Constants.createFlatAdvertURL, 
-                  modal.getContentComponent().form.value as FlatModel)
+                  newFlatAdvert)
                 .subscribe(response => {
                   console.log(response);
                 })
