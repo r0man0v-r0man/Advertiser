@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators'
 import { throwError, Observable } from 'rxjs';
 import { AppError } from '../app-errors/app-error';
@@ -32,12 +32,12 @@ export class DataService {
         catchError(this.handleError)
       )
   }
-  private handleError(error: Response){
+  private handleError(error: HttpErrorResponse){
     if(error.status === 400)
-    return throwError(new BadInput(error.json()));
+    return throwError(new BadInput(error.error));
   
     if(error.status === 404)
-    return throwError(new NotFoundError());
+    return throwError(new NotFoundError(error.error));
   
   return throwError(new AppError(error));
   }

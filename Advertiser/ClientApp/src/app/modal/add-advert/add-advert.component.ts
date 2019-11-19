@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DescriptionValidators } from 'src/app/validators/description.validators';
 import { Constants } from 'src/app/constants';
-import { UploadFile, UploadChangeParam } from 'ng-zorro-antd';
-import { throwError } from 'rxjs';
-import { AppError } from 'src/app/app-errors/app-error';
-import { NotFoundError } from 'src/app/app-errors/not-found-error';
+import { UploadFile, NzMessageService } from 'ng-zorro-antd';
+import { UserWarning } from 'src/app/app-errors/userWarning';
 
 @Component({
   selector: 'app-add-advert',
@@ -24,7 +22,7 @@ export class AddAdvertComponent implements OnInit {
     showPreviewIcon: false,
     showRemoveIcon: true
   }
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder, private messageService: NzMessageService) { }
 
   ngOnInit() {
     this.initForm();
@@ -41,4 +39,26 @@ export class AddAdvertComponent implements OnInit {
     if(info.file.status === 'done' && info.file.response) 
       this.form.controls['file'].setValue(info.file.response);
   }
+
+  beforeUpload = (file: File) : boolean => {
+    const maxDimension = 1000;
+    var width: number, height: number;
+    const img = new Image();
+    img.src = URL.createObjectURL(file);
+
+    img.onload = () => {
+      width = img.naturalWidth;
+      height = img.naturalHeight;    console.log(width, height);
+      if( width >= maxDimension || height >= maxDimension ) {
+        return true
+      } else {
+        throw new UserWarning(`Разрешение должно быть не меньше ${maxDimension}px`);
+      }
+      URL.revokeObjectURL(img.src);
+    }
+
+  }
+
+
+
 }

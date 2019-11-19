@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { DataService } from './data.service';
 import { HttpClient } from '@angular/common/http';
+import { Constants } from '../constants';
 
 @Injectable({
   providedIn: 'root'
@@ -8,6 +9,6 @@ import { HttpClient } from '@angular/common/http';
 export class FlatService extends DataService {
   
   constructor(httpService: HttpClient) {
-    super('https://localhost:44332/api/Flat/getAllFlats', httpService)
+    super(Constants.getAllFlats, httpService)
    }
 }
