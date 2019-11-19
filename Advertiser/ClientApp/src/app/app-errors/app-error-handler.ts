@@ -14,7 +14,10 @@ export class AppErrorHandler implements ErrorHandler, OnInit{
     ngOnInit() {
     }
     handleError(error: AppError) {
-        if((error instanceof BadInput) || (error instanceof NotFoundError)){
+        if(
+            (error instanceof BadInput) || 
+            (error instanceof NotFoundError)
+        ){
             this.msg.error(error.error);
         }
         if(error instanceof UserWarning){

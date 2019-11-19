@@ -38,7 +38,7 @@ export class DataService {
   
     if(error.status === 404)
     return throwError(new NotFoundError(error.error));
-  
+    
   return throwError(new AppError(error));
   }
 }

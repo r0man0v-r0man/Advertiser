@@ -4,6 +4,7 @@ import { DescriptionValidators } from 'src/app/validators/description.validators
 import { Constants } from 'src/app/constants';
 import { UploadFile, NzMessageService } from 'ng-zorro-antd';
 import { UserWarning } from 'src/app/app-errors/userWarning';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-add-advert',
@@ -40,25 +41,27 @@ export class AddAdvertComponent implements OnInit {
       this.form.controls['file'].setValue(info.file.response);
   }
 
-  beforeUpload = (file: File) : boolean => {
-    const maxDimension = 1000;
-    var width: number, height: number;
-    const img = new Image();
-    img.src = URL.createObjectURL(file);
+  beforeUpload = (file: File) : Observable<boolean> => {
+    return new Observable(observer => {
+      const maxDimension = 1000;
+      let width: number, height: number;
+      const img = new Image();
+      img.src = window.URL.createObjectURL(file);
+      img.onload = () => {
+        width = img.naturalWidth;
+        height = img.naturalHeight;    
+        const isMinDimension = (width >= maxDimension && height >= maxDimension)
+        if(!isMinDimension){
+          throw new UserWarning('Разрешение изображения меньше 1000px');
+        }
+          observer.next(isMinDimension);
+          observer.complete();
+          window.URL.revokeObjectURL(img.src);
 
-    img.onload = () => {
-      width = img.naturalWidth;
-      height = img.naturalHeight;    console.log(width, height);
-      if( width >= maxDimension || height >= maxDimension ) {
-        return true
-      } else {
-        throw new UserWarning(`Разрешение должно быть не меньше ${maxDimension}px`);
+          return;
       }
-      URL.revokeObjectURL(img.src);
-    }
-
+    });
   }
-
 
 
 }
