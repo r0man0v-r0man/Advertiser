@@ -5,7 +5,7 @@ namespace Domain.Interfaces
 {
     public interface IRepository<T>
     {
-        Task CreateAsync(T item);
+        Task<T> CreateAsync(T item);
         Task<T> GetByIdAsync(int Id);
         IAsyncEnumerable<T> GetAllAsync();
         Task RemoveAsync(T item);

@@ -14,10 +14,11 @@ namespace Domain.Interfaces.Implementation
             this.advertiserContext = advertiserContext;
             this.dbSet = advertiserContext.Set<T>();
         }
-        public async Task CreateAsync(T item)
+        public async Task<T> CreateAsync(T item)
         {
             await dbSet.AddAsync(item);
             await advertiserContext.SaveChangesAsync().ConfigureAwait(false);
+            return item;
         }
 
         public async IAsyncEnumerable<T> GetAllAsync()

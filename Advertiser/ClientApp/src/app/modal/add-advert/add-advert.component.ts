@@ -57,7 +57,6 @@ export class AddAdvertComponent implements OnInit {
           observer.next(isMinDimension);
           observer.complete();
           window.URL.revokeObjectURL(img.src);
-
           return;
       }
     });

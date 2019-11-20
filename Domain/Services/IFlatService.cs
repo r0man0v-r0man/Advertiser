@@ -8,7 +8,7 @@ namespace Domain.Services
     {
         Task<FlatModel> GetByIdAsync(int id);
         IAsyncEnumerable<FlatModel> GetAll();
-        Task AddAsync(FlatModel flat);
+        Task<FlatModel> AddAsync(FlatModel flat);
     }
 
 }

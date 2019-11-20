@@ -34,7 +34,7 @@ export class NavbarComponent implements OnInit {
                   Constants.createFlatAdvertURL, 
                   newFlatAdvert)
                 .subscribe(response => {
-                  console.log(response);
+                  console.info(response);
                 })
               modal.destroy();
             }
