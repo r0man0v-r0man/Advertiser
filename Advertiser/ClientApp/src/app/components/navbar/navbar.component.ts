@@ -4,6 +4,7 @@ import { AddAdvertComponent } from 'src/app/modal/add-advert/add-advert.componen
 import { FlatService } from 'src/app/services/flat.service';
 import { Constants } from 'src/app/constants';
 import { FlatModel } from 'src/app/models/flatModel';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -11,11 +12,15 @@ import { FlatModel } from 'src/app/models/flatModel';
   styleUrls: ['./navbar.component.less']
 })
 export class NavbarComponent implements OnInit {
-  constructor(private modalService: NzModalService, private flatService: FlatService) { }
-
+  constructor(
+    private modalService: NzModalService, 
+    private flatService: FlatService,
+    private router: Router) { }
   ngOnInit() {
   }
-
+  goToDetails(id: number){
+    this.router.navigate(['/flat/', id]);
+  }
   showAddAdvertModal(){
   const modal = this.modalService.create({
       nzTitle: 'Добавить объявление',
@@ -33,9 +38,9 @@ export class NavbarComponent implements OnInit {
                 .create( 
                   Constants.createFlatAdvertURL, 
                   newFlatAdvert)
-                .subscribe(response => {
-                  console.info(response);
-                })
+                .subscribe(
+                  response => this.goToDetails(response.id)
+                );
               modal.destroy();
             }
           }

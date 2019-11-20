@@ -15,6 +15,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { FlatsComponent } from './components/flat/flats/flats.component';
 import { AppErrorHandler } from './app-errors/app-error-handler';
 import { AddAdvertComponent } from './modal/add-advert/add-advert.component';
+import { FlatDetailComponent } from './components/flat/flat-detail/flat-detail.component';
 
 registerLocaleData(ru);
 
@@ -25,7 +26,8 @@ registerLocaleData(ru);
     NotFoundComponent,
     NavbarComponent,
     FlatsComponent,
-    AddAdvertComponent
+    AddAdvertComponent,
+    FlatDetailComponent
   ],
   imports: [
     BrowserModule,

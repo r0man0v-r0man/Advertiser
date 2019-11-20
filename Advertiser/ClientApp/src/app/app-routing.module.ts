@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { FlatsComponent } from './components/flat/flats/flats.component';
+import { FlatDetailComponent } from './components/flat/flat-detail/flat-detail.component';
 
 
 const routes: Routes = [
@@ -11,8 +12,12 @@ const routes: Routes = [
     component: HomeComponent
   },
   {  
-    path: 'flats', 
+    path: 'flat', 
     component: FlatsComponent
+  },
+  {
+    path: 'flat/:id',
+    component: FlatDetailComponent
   },
   {  
     path: '**', 
