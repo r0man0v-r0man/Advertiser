@@ -12,6 +12,8 @@ import { Observable } from 'rxjs';
   styleUrls: ['./add-advert.component.less']
 })
 export class AddAdvertComponent implements OnInit {
+  minDimension = 1000;
+  maxFileSize = 3;
   price = 200;
   formatterDollar = (value: number) => `$ ${value}`;
   parserDollar = (value: string) => value.replace('$ ', '');
@@ -41,24 +43,40 @@ export class AddAdvertComponent implements OnInit {
       this.form.controls['file'].setValue(info.file.response);
   }
 
-  beforeUpload = (file: File) : Observable<boolean> => {
-    return new Observable(observer => {
-      const maxDimension = 1000;
+  checkImageResolution(file: File, resolution: number) : Observable<boolean>{
+    return new Observable(observer=>{
       let width: number, height: number;
       const img = new Image();
       img.src = window.URL.createObjectURL(file);
       img.onload = () => {
         width = img.naturalWidth;
         height = img.naturalHeight;    
-        const isMinDimension = (width >= maxDimension && height >= maxDimension)
-        if(!isMinDimension){
-          throw new UserWarning('Разрешение изображения меньше 1000px');
-        }
+        const isMinDimension = (width >= resolution && height >= resolution)
+        if(!isMinDimension) throw new UserWarning('Разрешение изображения меньше 1000px');
+        
           observer.next(isMinDimension);
           observer.complete();
           window.URL.revokeObjectURL(img.src);
           return;
       }
+    })
+  }
+
+  beforeUpload = (file: File) : Observable<boolean> => {
+    return new Observable(observer => {
+      const isSizeLimit = file.size / 1024 / 1024 < this.maxFileSize;
+      if (!isSizeLimit) {
+        this.messageService.warning(`Максимальный размер изображения ${this.maxFileSize}mb`);
+        observer.complete();
+        return;
+      }
+
+      this.checkImageResolution(file, this.minDimension).subscribe(
+        isResolutionLimit => {
+          observer.next(isSizeLimit && isResolutionLimit);
+          observer.complete();
+        }
+      );
     });
   }
 
