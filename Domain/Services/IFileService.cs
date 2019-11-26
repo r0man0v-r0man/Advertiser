@@ -7,7 +7,6 @@ namespace Domain.Services
     public interface IFileService
     {
         Task<string> UploadFile(IFormFile uploadFile, string path);
-        CloudBlobContainer GetBlobContainer(string connectionString, string containerName);
         Task<string> CloudUploadFile(IFormFile uploadFile);
     }
 }

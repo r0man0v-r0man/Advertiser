@@ -23,11 +23,7 @@ namespace Domain.Services
         {
             var container = GetBlobContainer(AzureConnectionString, "files");
 
-            var content = ContentDispositionHeaderValue.Parse(uploadFile.ContentDisposition);
-
-            var fileName = content.FileName.Trim('"');
-
-            var blockBlob = container.GetBlockBlobReference(fileName);
+            var blockBlob = container.GetBlockBlobReference(SetUniqueName(uploadFile));
 
             await blockBlob.UploadFromStreamAsync(uploadFile.OpenReadStream()).ConfigureAwait(false);
 
@@ -109,7 +105,7 @@ namespace Domain.Services
             return string.Concat(uniqueName, fileExtension);
         }
 
-        public CloudBlobContainer GetBlobContainer(string azureConnectionString, string containerName)
+        private CloudBlobContainer GetBlobContainer(string azureConnectionString, string containerName)
         {
             var storageAccount = CloudStorageAccount.Parse(azureConnectionString);
 

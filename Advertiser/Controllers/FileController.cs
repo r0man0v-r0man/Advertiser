@@ -27,21 +27,26 @@ namespace Advertiser.Controllers
         [HttpPost("uploadFile")]
         public async Task<IActionResult> UploadFile(IFormFile file)
         {
-            var uploadPath = _environment.WebRootPath;
+            if (file != null)
+            {
 
-            //var cloudResult = await _serviceManager.Files.CloudUploadFile(file).ConfigureAwait(false);
+                var result = await _serviceManager.Files.CloudUploadFile(file).ConfigureAwait(false);
+                //var uploadPath = _environment.WebRootPath;
+                //var result = await _serviceManager.Files.UploadFile(file, uploadPath).ConfigureAwait(false);
 
-            var result = await _serviceManager.Files.UploadFile(file, uploadPath).ConfigureAwait(false);
+                return CreatedAtAction(nameof(UploadFile),
+                    new FileModel
+                    {
+                        LinkProps = new FileModel.Links { Download = result },
+                        Name = Path.GetFileName(result),
+                        Size = file.Length,
+                        Status = FileModel.Response.Success.ToString().ToLower(),
+                        Uid = Path.GetFileNameWithoutExtension(result)
+                    });
+ 
+            }
 
-            return CreatedAtAction(nameof(UploadFile), 
-                new FileModel
-                {
-                    LinkProps = new FileModel.Links { Download = result },
-                    Name = Path.GetFileName(result),
-                    Size = file.Length,
-                    Status = FileModel.Response.Success.ToString().ToLower(),
-                    Uid = Path.GetFileNameWithoutExtension(result)
-                });        
+            return StatusCode(StatusCodes.Status503ServiceUnavailable);
         }
     }
 }
