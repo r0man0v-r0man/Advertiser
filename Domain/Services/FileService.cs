@@ -1,13 +1,39 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
+using Microsoft.WindowsAzure.Storage;
+using Microsoft.WindowsAzure.Storage.Blob;
 
 namespace Domain.Services
 {
     public class FileService : IFileService
     {
+        private readonly IConfiguration _config;
+        private string AzureConnectionString { get; }
+        public FileService(IConfiguration configuration)
+        {
+            _config = configuration;
+            AzureConnectionString = _config["AzureStorageConnectionString"];
+        }
+        public async Task<string> CloudUploadFile(IFormFile uploadFile)
+        {
+            var container = GetBlobContainer(AzureConnectionString, "files");
+
+            var content = ContentDispositionHeaderValue.Parse(uploadFile.ContentDisposition);
+
+            var fileName = content.FileName.Trim('"');
+
+            var blockBlob = container.GetBlockBlobReference(fileName);
+
+            await blockBlob.UploadFromStreamAsync(uploadFile.OpenReadStream()).ConfigureAwait(false);
+
+            return blockBlob.Uri.ToString();
+
+        }
         /// <summary>
         /// Загрузка файла на сервер
         /// </summary>
@@ -18,6 +44,7 @@ namespace Domain.Services
         {
             if (uploadFile != null)
             {
+
                 var folderPath = "Upload";
                 var subFolderYear = DateTime.Now.Year.ToString();
 
@@ -80,6 +107,16 @@ namespace Domain.Services
             var uniqueName = Guid.NewGuid().ToString();
             var fileExtension = Path.GetExtension(file.FileName);
             return string.Concat(uniqueName, fileExtension);
+        }
+
+        public CloudBlobContainer GetBlobContainer(string azureConnectionString, string containerName)
+        {
+            var storageAccount = CloudStorageAccount.Parse(azureConnectionString);
+
+            var blobClient = storageAccount.CreateCloudBlobClient();
+
+            return blobClient.GetContainerReference(containerName);
+
         }
     }
 }

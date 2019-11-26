@@ -29,6 +29,8 @@ namespace Advertiser.Controllers
         {
             var uploadPath = _environment.WebRootPath;
 
+            //var cloudResult = await _serviceManager.Files.CloudUploadFile(file).ConfigureAwait(false);
+
             var result = await _serviceManager.Files.UploadFile(file, uploadPath).ConfigureAwait(false);
 
             return CreatedAtAction(nameof(UploadFile), 
