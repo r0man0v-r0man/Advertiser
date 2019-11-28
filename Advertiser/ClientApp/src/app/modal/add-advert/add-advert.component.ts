@@ -5,6 +5,7 @@ import { Constants } from 'src/app/constants';
 import { UploadFile, NzMessageService } from 'ng-zorro-antd';
 import { UserWarning } from 'src/app/app-errors/userWarning';
 import { Observable } from 'rxjs';
+import { FileService } from 'src/app/services/file.service';
 
 @Component({
   selector: 'app-add-advert',
@@ -25,7 +26,10 @@ export class AddAdvertComponent implements OnInit {
     showPreviewIcon: false,
     showRemoveIcon: true
   }
-  constructor(private formBuilder: FormBuilder, private messageService: NzMessageService) { }
+  constructor(
+    private formBuilder: FormBuilder, 
+    private messageService: NzMessageService,
+    private fileService: FileService) { }
 
   ngOnInit() {
     this.initForm();
@@ -40,9 +44,9 @@ export class AddAdvertComponent implements OnInit {
 
   onChange(info: { file: UploadFile }){
     if(info.file.status === 'done' && info.file.response) 
-      this.form.controls['file'].setValue(info.file.response);
+    this.setFormControlValue('file', info.file.response);
   }
-
+  
   checkImageResolution(file: File, resolution: number) : Observable<boolean>{
     return new Observable(observer=>{
       let width: number, height: number;
@@ -61,7 +65,24 @@ export class AddAdvertComponent implements OnInit {
       }
     })
   }
+  onDelete = (file: UploadFile) : Observable<boolean> => {
+    return new Observable(observer =>{
+      console.info(file);
+      if(file){
+        this.fileService.deleteFile(file.response.name).subscribe(response =>{
+          if(response) {
+          observer.next(response);
+          observer.complete();
+          this.setFormControlValue('file', null);
+          }
+        });
+      }
+    })
+  }
+  setFormControlValue(formControlName: string, value: any){
+    this.form.controls[formControlName].setValue(value);
 
+  };
   beforeUpload = (file: File) : Observable<boolean> => {
     return new Observable(observer => {
       const isSizeLimit = file.size / 1024 / 1024 < this.maxFileSize;

@@ -28,8 +28,8 @@ export class DataService {
         catchError(this.handleError)
       )
   }
-  delete(id){
-    return this.httpService.delete(this.url + '/' + id)
+  deleteFile(name: string){
+    return this.httpService.delete<boolean>(this.url + '/' + name)
       .pipe(
         catchError(this.handleError)
       )

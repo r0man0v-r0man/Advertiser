@@ -7,6 +7,7 @@ namespace Domain.Services
     public interface IFileService
     {
         Task<string> UploadFile(IFormFile uploadFile, string path);
-        Task<string> CloudUploadFile(IFormFile uploadFile);
+        Task<string> CloudUploadFileAsync(IFormFile uploadFile);
+        Task<bool> CloudDeleteFileAsync(string fileName);
     }
 }

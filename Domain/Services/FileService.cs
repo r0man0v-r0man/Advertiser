@@ -14,20 +14,30 @@ namespace Domain.Services
     {
         private readonly IConfiguration _config;
         private string AzureConnectionString { get; }
+        private string ContainerName { get; }
         public FileService(IConfiguration configuration)
         {
             _config = configuration;
             AzureConnectionString = _config["AzureStorageConnectionString"];
+            ContainerName = "files";
         }
-        public async Task<string> CloudUploadFile(IFormFile uploadFile)
+        public async Task<string> CloudUploadFileAsync(IFormFile uploadFile)
         {
-            var container = GetBlobContainer(AzureConnectionString, "files");
+            var container = GetBlobContainer(AzureConnectionString, ContainerName);
+            if (await container.ExistsAsync().ConfigureAwait(false))
+            {
+                var blockBlob = container.GetBlockBlobReference(SetUniqueName(uploadFile));
 
-            var blockBlob = container.GetBlockBlobReference(SetUniqueName(uploadFile));
+                await blockBlob.UploadFromStreamAsync(uploadFile.OpenReadStream()).ConfigureAwait(false);
 
-            await blockBlob.UploadFromStreamAsync(uploadFile.OpenReadStream()).ConfigureAwait(false);
+                return blockBlob.Uri.ToString();
+            }
+            else
+            {
+                return string.Empty;
+            }
 
-            return blockBlob.Uri.ToString();
+
 
         }
         /// <summary>
@@ -104,7 +114,12 @@ namespace Domain.Services
             var fileExtension = Path.GetExtension(file.FileName);
             return string.Concat(uniqueName, fileExtension);
         }
-
+        /// <summary>
+        /// Получаем облачный контейнер
+        /// </summary>
+        /// <param name="azureConnectionString">Строка подключения</param>
+        /// <param name="containerName">Имя контейнера</param>
+        /// <returns></returns>
         private CloudBlobContainer GetBlobContainer(string azureConnectionString, string containerName)
         {
             var storageAccount = CloudStorageAccount.Parse(azureConnectionString);
@@ -112,7 +127,27 @@ namespace Domain.Services
             var blobClient = storageAccount.CreateCloudBlobClient();
 
             return blobClient.GetContainerReference(containerName);
+        }
 
+        public async Task<bool> CloudDeleteFileAsync(string fileName)
+        {
+            try
+            {
+                var container = GetBlobContainer(AzureConnectionString, ContainerName);
+                if (await container.ExistsAsync().ConfigureAwait(false))
+                {
+                    var file = container.GetBlobReference(fileName);
+                    if (await file.ExistsAsync().ConfigureAwait(false))
+                    {
+                        await file.DeleteAsync().ConfigureAwait(false);
+                    }
+                }
+                return true;
+            }
+            catch 
+            {
+                return false;
+            }
         }
     }
 }
