@@ -9,7 +9,9 @@ namespace Domain
     {
         private readonly IFlatService _flatService;
         private readonly IFileService _fileService;
-        public ServiceManager(IFlatService flatService, IFileService fileService)
+        public ServiceManager(
+            IFlatService flatService, 
+            IFileService fileService)
         {
             _flatService = flatService;
             _fileService = fileService;
